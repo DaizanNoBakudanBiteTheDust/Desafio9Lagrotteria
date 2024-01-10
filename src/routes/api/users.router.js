@@ -15,6 +15,7 @@ import {
 } from '../../controlers/users.controller.js'
 import configs from '../../config.js'
 
+
 const router = Router();
 
 router.post('/register', registerUser);

@@ -13,11 +13,22 @@ import {
 } from '../services/cart.service.js'
 import infoDto from '../DTOs/info.dto.js';
 import configs from '../config.js';
+import customError from '../middlewares/errors/customError.js';
+import EErrors from '../middlewares/errors/enums.js';
 
 const registerUser = async (req, res) => {
     try {
         const { email, first_name, last_name, age, password } = req.body;
         const user = await getUserByEmail(email);
+
+        if (!first_name || !last_name || !email) {
+            throw CustomError.createError({
+                name: 'UserError',
+                cause: 'Invalid data types, first_name, last_name and email required',
+                message: 'Error trying to create user',
+                code: EErrors.INVALID_TYPE_ERROR
+            })
+        }    
 
         if (user) {
             return res.status(400).json({ error: 'El usuario ya está registrado' });
@@ -71,6 +82,15 @@ const loginUser = async (req, res) => {
     } = req.body;
 
     console.log(req.body)
+
+    if (!email|| !password) {
+        throw CustomError.createError({
+            name: 'UserError',
+            cause: 'Invalid data types, first_name, last_name and email required',
+            message: 'Error trying to create user',
+            code: EErrors.INVALID_TYPE_ERROR
+        })
+    }  
 
     if (email === adminUserPredator.email || password === adminUserPredator.password) {
         req.user = {
