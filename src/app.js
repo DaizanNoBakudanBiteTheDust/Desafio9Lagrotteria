@@ -11,6 +11,7 @@ import session from 'express-session';
 import fileStore from 'session-file-store';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
+import compression from 'express-compression';
 
 
 //dependencias de ruta
@@ -74,6 +75,9 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(cors());
 
+app.use(compression({
+        brotli: { enabled: true, zlib: {} }
+    }));
 
 // handlebars
 

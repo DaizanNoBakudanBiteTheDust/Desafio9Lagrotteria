@@ -234,6 +234,12 @@ router.get('/realTimeCarts', AdminAccess, async (req, res) => {
     });
 });
 
+router.get('/mockingproducts', AdminAccess, async (req, res) => {
+    res.render('products', {
+        carts: await cartManager.getAll()
+    });
+});
+
 
 
 
