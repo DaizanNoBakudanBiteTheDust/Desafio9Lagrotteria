@@ -3,6 +3,9 @@ import {getAllProducts,
     deleteProduct,
     idProduct} from '../services/products.service.js';
 import { productsModel } from '../dao/dbManagers/models/products.models.js';
+import customError from '../middlewares/errors/customError.js';
+import EErrors from '../middlewares/errors/enums.js';
+import { v4 as uuidv4 } from 'uuid';
 
 
 const getProducts = async (req, res) => {
@@ -18,10 +21,12 @@ const postProducts = async (req, res) => {
     const product = req.body;
 
     if (!product.titulo || !product.descripcion || !product.precio || !product.status || !product.thumbnail || !product.code || !product.stock || !product.category) {
-            //Error del cliente
-            return res.status(400).send({
-                    status: 'error',
-                    error: 'incomplete values'
+        //Error del cliente
+            throw customError.createError({
+                name: 'product error',
+                cause: 'Invalid data types, titulo, descripcion, precio, status, thumbnail, code, stock and category',
+                message: 'Error trying to create product',
+                code: EErrors.PRODUCT_NOT_FOUND
             })
     }
 

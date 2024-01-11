@@ -22,7 +22,7 @@ const registerUser = async (req, res) => {
         const user = await getUserByEmail(email);
 
         if (!first_name || !last_name || !email) {
-            throw CustomError.createError({
+            throw customError.createError({
                 name: 'UserError',
                 cause: 'Invalid data types, first_name, last_name and email required',
                 message: 'Error trying to create user',

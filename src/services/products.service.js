@@ -8,8 +8,8 @@ const getAllProducts = async () => {
     return allProducts;
 }
 
-const saveProduct = async () => {
-    const saveProducts = await manager.save();
+const saveProduct = async (product) => {
+    const saveProducts = await manager.save(product);
 
     return saveProducts;
 }

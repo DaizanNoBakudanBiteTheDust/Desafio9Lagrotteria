@@ -52,21 +52,18 @@ export default class Products {
     }
 
     save = async (product) => {
-
-        const existingProduct = await productsModel.findOne({
-            code: product.code
-        });
-
-        if (existingProduct) {
-           console.log("producto existe con ese codigo");
-            };
-        
-        // se agrega el producto
-
-        const result = await productsModel.create(product);
-
-        return result;
-    }
+        try {
+          // Intenta crear el producto
+          const result = await productsModel.create(product);
+          return result;
+        } catch (error) {
+          if (error.code === 11000) { // Código de error duplicado de MongoDB
+            throw new Error("Producto con ese código ya existe");
+          } else {
+            throw error; // Re-lanza el error original para otros casos
+          }
+        }
+      };
 
     delete = async (id, product) => {
         const result = await productsModel.deleteOne({_id : id}, product);
