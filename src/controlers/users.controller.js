@@ -92,7 +92,7 @@ const loginUser = async (req, res) => {
         })
     }  
 
-    if (email === adminUserPredator.email || password === adminUserPredator.password) {
+    if (email === adminUserPredator.email && password === adminUserPredator.password) {
         req.user = {
             name: 'Admin', // O cualquier otro nombre para el administrador
             email: email,
